@@ -7,6 +7,10 @@ type SortItem = {
   sortProperty: string;
 };
 
+// type PopupClick = MouseEvent & {
+//   composedPath(): Node[];
+// }; // этот кусок кода есть у Арчакова, но нам она вроде не нужна
+
 export const sortList: SortItem[] = [
   { name: 'популярности (DESC)', sortProperty: 'rating' },
   { name: 'популярности (ASC)', sortProperty: '-rating' },
@@ -29,11 +33,11 @@ function Sort() {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
-    };
+    }; //у Арчакова другой код из-за того, что у него вместо composedPath() там path
 
     document.body.addEventListener('click', handleClickOutside);
 
